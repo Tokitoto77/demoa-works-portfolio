@@ -80,35 +80,87 @@ function getSchedule(e) {
 // 予約受付機能
 // --------------------------------------------------
 function handleReservation(e) {
+    var data;
+
+    // POSTデータ（JSON）をパース
+    try {
+        data = JSON.parse(e.postData.contents);
+    } catch (f) {
+        // GETパラメータの場合（デバッグ用）
+        data = e.parameter;
+    }
+
     var ss = SpreadsheetApp.openById(spreadsheetId);
     var sheet = ss.getSheets()[0]; // 1枚目のシートを使う
 
-    // パラメータ取得
-    var p = e.parameter;
-    var name = p.name;
-    var email = p.email;
-    var date = p.date;
-    var time = p.time;
-    var menu = p.menu;
+    /*
+      基本方針:
+      フォームからは以下のデータが来る想定。
+      data.last_name, data.first_name, data.email, data.phone,
+      data.course (メニュー名), data.date_time ("2026/1/7 10:00 - 11:00")
+    */
 
-    // スプレッドシートに保存
-    sheet.appendRow([new Date(), name, email, date, time, menu]);
+    var name = data.last_name + ' ' + data.first_name;
+    var email = data.email;
+    var phone = data.phone;
+    var course = data.course; // "体験レッスン..."
+    var dateTimeStr = data.date_time || "";
+    var message = data.message || "";
 
-    // 自動返信メール送信
+    // 日時文字列から「日付」「時間」を簡易抽出
+    // "2026/1/7 10:00 - 11:00" -> "2026/1/7", "10:00"
+    var datePart = "";
+    var timePart = "";
+
+    // 正規表現で日付と開始時間を抜き出す
+    // 例: 2026/1/7 10:00...
+    var match = dateTimeStr.match(/(\d{4}\/\d{1,2}\/\d{1,2})\s+(\d{1,2}:\d{2})/);
+    if (match) {
+        datePart = match[1];
+        timePart = match[2];
+    } else {
+        // マッチしなかった場合はそのまま使う（エラー回避）
+        datePart = dateTimeStr;
+        timePart = "";
+    }
+
+    //-----------------------------------------------------
+    // 1. スプレッドシートに保存
+    //-----------------------------------------------------
+    // 列順序: 日時(タイムスタンプ), 名前, Email, 電話, 予約希望日時, コース, 備考
+    sheet.appendRow([new Date(), name, email, phone, dateTimeStr, course, message]);
+
+    //-----------------------------------------------------
+    // 2. 自動返信メール送信
+    //-----------------------------------------------------
     var subject = "【CORE SHAPE PILATES】ご予約ありがとうございます";
     var body = name + " 様\n\n"
         + "体験レッスンのご予約ありがとうございます。\n"
         + "以下の内容で承りました。\n\n"
-        + "■予約日時: " + date + " " + time + "\n"
-        + "■コース: " + menu + "\n\n"
+        + "■予約日時: " + dateTimeStr + "\n"
+        + "■コース: " + course + "\n\n"
         + "当日は5分前までにお越しください。\n"
         + "お待ちしております。\n\n"
-        + "CORE SHAPE PILATES";
+        + "--------------------------------------------------\n"
+        + "CORE SHAPE PILATES\n"
+        + "東京都渋谷区道玄坂1-2-3\n"
+        + "--------------------------------------------------";
 
     MailApp.sendEmail(email, subject, body);
 
-    // Googleカレンダーの定員数を更新（残数を減らす）
-    updateCalendarCapacity(date, time, menu);
+    //-----------------------------------------------------
+    // 3. カレンダー更新（定員管理）
+    //-----------------------------------------------------
+    // 抽出した日付と時間を使ってカレンダーを検索
+    if (datePart && timePart) {
+        // datePart: "2026/1/7" -> "1/7" 形式に変換（カレンダー検索用）
+        // updateCalendarCapacity関数に合わせて調整
+        var simpleDate = datePart.split('/').slice(1).join('/'); // "1/7"
+        updateCalendarCapacity(simpleDate, timePart, course);
+    } else {
+        // 万が一抽出できなかった場合はスキップ
+        console.log("日時フォーマットが解析できませんでした: " + dateTimeStr);
+    }
 
     // 完了メッセージを返す
     var result = { result: 'success' };

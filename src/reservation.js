@@ -16,14 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // dateTimeInput.readOnly = true; 
     }
 
-    if (typeParam === 'trial') {
-        courseSelect.value = 'trial';
-    } else if (classParam) {
-        // Try to match partial text for class types
-        if (classParam.includes('マット')) courseSelect.value = 'mat';
-        else if (classParam.includes('マシン')) courseSelect.value = 'machine';
-        else if (classParam.includes('ミックス')) courseSelect.value = 'mix';
-    }
+    // Fixed course is already distinct in HTML value attribute. 
+    // We do NOT overwrite it based on URL params anymore.
 
     // 3. Handle Form Submission
     const form = document.getElementById('reservation-form');
@@ -58,16 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
             data.date_time = `${year}/${data.date_time}`;
         }
 
-        // 2. Translate Course Code to Japanese
-        const courseMap = {
-            'trial': '初回体験（60分）',
-            'mat': 'マットピラティス',
-            'machine': 'マシンピラティス',
-            'mix': 'ミックス'
-        };
-        if (courseMap[data.course]) {
-            data.course = courseMap[data.course];
-        }
+        // Course is already in Japanese text, no translation needed.
 
         // Send data to Google Sheets via GAS
         // Send data to Google Sheets via GAS
