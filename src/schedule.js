@@ -59,6 +59,7 @@ function renderSchedule(events, tbody) {
 
         dailyEvents.forEach((evt, index) => {
             const tr = document.createElement('tr');
+            tr.setAttribute('data-date', dateStr); // For filtering
 
             // 1st Column: Date (Only for the first row of the day)
             if (index === 0) {
@@ -123,5 +124,50 @@ function renderSchedule(events, tbody) {
         });
 
         dayIndex++;
+    });
+
+    // Create Date Tabs
+    createDateTabs(Object.keys(eventsByDate));
+}
+
+function createDateTabs(dates) {
+    const container = document.getElementById('date-tabs');
+    if (!container) return;
+    container.innerHTML = '';
+
+    // "All" button? Maybe just start with first date.
+    // Let's create a tab for each date
+    dates.forEach((dateStr, index) => {
+        const btn = document.createElement('div');
+        btn.className = 'date-tab';
+        btn.textContent = dateStr;
+
+        // Default select first day
+        if (index === 0) {
+            btn.classList.add('active');
+            filterSchedule(dateStr);
+        }
+
+        btn.addEventListener('click', () => {
+            // Update active state
+            document.querySelectorAll('.date-tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Filter rows
+            filterSchedule(dateStr);
+        });
+
+        container.appendChild(btn);
+    });
+}
+
+function filterSchedule(targetDate) {
+    const rows = document.querySelectorAll('#schedule-body tr');
+    rows.forEach(row => {
+        if (row.getAttribute('data-date') === targetDate) {
+            row.classList.remove('schedule-row-hidden');
+        } else {
+            row.classList.add('schedule-row-hidden');
+        }
     });
 }

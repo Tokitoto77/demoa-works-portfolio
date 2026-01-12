@@ -1200,3 +1200,52 @@ h6 {
     display: block;
   }
 }
+
+/* Date Tabs for Mobile */
+.date-tabs {
+  display: flex;
+  overflow-x: auto;
+  gap: 8px;
+  padding: 0 4px 16px;
+  margin-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+
+.date-tabs::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.date-tab {
+  flex: 0 0 auto;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: white;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.date-tab.active {
+  background: var(--primary-color);
+  color: white;
+  box-shadow: 0 2px 8px rgba(92, 149, 134, 0.4);
+}
+
+.schedule-row-hidden {
+  display: none !important;
+}
+
+/* Hide tabs on Desktop to avoid table complexity */
+@media (min-width: 768px) {
+  .date-tabs {
+    display: none;
+  }
+  
+  .schedule-row-hidden {
+    display: table-row !important; /* Force show on desktop */
+  }
+}
