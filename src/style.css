@@ -588,9 +588,14 @@ h6 {
 
 .checklist__item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  /* 上揃えに変更 */
   gap: 12px;
   font-size: 1.05rem;
+  word-break: break-word;
+  /* 長い単語を折り返す */
+  overflow-wrap: break-word;
+  line-height: 1.5;
 }
 
 .check-icon {
