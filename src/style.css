@@ -581,21 +581,32 @@ h6 {
 
 .checklist {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: 1fr;
+  /* スマホでは1列固定 */
   gap: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
+}
+
+@media (min-width: 768px) {
+  .checklist {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
 }
 
 .checklist__item {
   display: flex;
   align-items: flex-start;
-  /* 上揃えに変更 */
   gap: 12px;
   font-size: 1.05rem;
-  word-break: break-word;
-  /* 長い単語を折り返す */
-  overflow-wrap: break-word;
+  word-break: break-all;
+  /* 強制的に折り返す */
+  overflow-wrap: anywhere;
+  /* どこでも改行許可 */
+  white-space: normal;
+  /* 折り返しを有効化 */
   line-height: 1.5;
+  width: 100%;
+  /* 幅を親要素に合わせる */
 }
 
 .check-icon {
