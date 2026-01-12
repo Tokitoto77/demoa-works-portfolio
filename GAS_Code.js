@@ -107,11 +107,68 @@ function handleReservation(e) {
 
     MailApp.sendEmail(email, subject, body);
 
+    // Googleカレンダーの定員数を更新（残数を減らす）
+    updateCalendarCapacity(date, time, menu);
+
     // 完了メッセージを返す
     var result = { result: 'success' };
     var output = ContentService.createTextOutput(JSON.stringify(result));
     output.setMimeType(ContentService.MimeType.JSON);
     return output;
+}
+
+// --------------------------------------------------
+// カレンダー更新機能（残席管理）
+// --------------------------------------------------
+function updateCalendarCapacity(dateStr, timeStr, menuName) {
+    var cal = CalendarApp.getCalendarById(calendarId);
+
+    // 日時をDateオブジェクトに変換（開始時間を特定）
+    // dateStr: "2024-01-15", timeStr: "10:00" 想定
+    // ※予約フォームから来るフォーマットに合わせる必要があります
+    // ここでは "1/15" 形式で来ると仮定して処理（年は現在年）
+
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = parseInt(dateStr.split('/')[0]) - 1;
+    var day = parseInt(dateStr.split('/')[1]);
+
+    var hour = parseInt(timeStr.split(':')[0]);
+    var minute = parseInt(timeStr.split(':')[1]);
+
+    var startTime = new Date(year, month, day, hour, minute);
+    var endTime = new Date(startTime.getTime() + (60 * 60 * 1000)); // 1時間後まで検索
+
+    // イベント検索
+    var events = cal.getEvents(startTime, endTime);
+
+    for (var i = 0; i < events.length; i++) {
+        var evt = events[i];
+        var title = evt.getTitle();
+
+        // メニュー名が含まれているか確認
+        // （完全一致でなくても、同じ時間帯のイベントなら対象とする簡易ロジック）
+
+        var newTitle = title;
+
+        // 【残x】を探す
+        var match = title.match(/[【\[]残(\d+)[】\]]/);
+        if (match) {
+            var currentCount = parseInt(match[1]);
+            var nextCount = currentCount - 1;
+
+            if (nextCount <= 0) {
+                // 0になったら満席にする
+                newTitle = title.replace(match[0], '【満】');
+            } else {
+                // 数を減らす
+                newTitle = title.replace(match[0], '【残' + nextCount + '】');
+            }
+
+            evt.setTitle(newTitle); // カレンダー更新
+            break; // 1つ更新したら終了
+        }
+    }
 }
 
 function testAuth() {
