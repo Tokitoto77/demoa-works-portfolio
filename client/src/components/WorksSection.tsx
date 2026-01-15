@@ -1,0 +1,176 @@
+/**
+ * Works Section Component
+ * Design: 制作事例を紹介するセクション
+ * スマホファースト・日本語表記
+ */
+
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Calendar, Mail, Bell, FileSpreadsheet } from "lucide-react";
+import { motion } from "framer-motion";
+
+interface Work {
+  id: number;
+  title: string;
+  category: string;
+  image: string;
+  features: { icon: React.ElementType; label: string }[];
+  status: "完成" | "制作中" | "サンプル";
+}
+
+export default function WorksSection() {
+  const works: Work[] = [
+    {
+      id: 1,
+      title: "ピラティススタジオ 体験予約LP",
+      category: "フィットネス",
+      image: "/images/pilates-lp-jp.png",
+      features: [
+        { icon: Calendar, label: "カレンダー予約" },
+        { icon: Mail, label: "自動返信メール" },
+      ],
+      status: "完成",
+    },
+    {
+      id: 2,
+      title: "飲食店 予約LP",
+      category: "飲食店",
+      image: "/images/restaurant-lp-jp.png",
+      features: [
+        { icon: Bell, label: "LINE通知" },
+        { icon: Mail, label: "自動返信メール" },
+      ],
+      status: "サンプル",
+    },
+    {
+      id: 3,
+      title: "コーチング 無料相談LP",
+      category: "コンサル・コーチング",
+      image: "/images/coaching-lp-jp.png",
+      features: [
+        { icon: Calendar, label: "カレンダー予約" },
+        { icon: Mail, label: "自動返信メール" },
+      ],
+      status: "サンプル",
+    },
+    {
+      id: 4,
+      title: "ハンドメイド 注文LP",
+      category: "ハンドメイド",
+      image: "/images/handmade-lp-jp.png",
+      features: [
+        { icon: FileSpreadsheet, label: "在庫管理連携" },
+        { icon: Mail, label: "自動返信メール" },
+      ],
+      status: "サンプル",
+    },
+  ];
+
+  const getStatusColor = (status: Work["status"]) => {
+    switch (status) {
+      case "完成":
+        return "bg-[#4ECDC4] text-white";
+      case "制作中":
+        return "bg-[#FF6B35] text-white";
+      case "サンプル":
+        return "bg-gray-500 text-white";
+    }
+  };
+
+  return (
+    <section id="works" className="py-16 md:py-24 bg-secondary/30">
+      <div className="container">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-10 md:mb-14"
+        >
+          <span className="inline-block px-4 py-1.5 rounded-full bg-[#FF6B35]/10 text-[#FF6B35] text-sm font-medium mb-4">
+            制作事例
+          </span>
+          <h2 className="text-2xl md:text-4xl font-bold mb-4">
+            こんなLPが作れます
+          </h2>
+          <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto px-4">
+            業種に合わせた自動化機能を組み合わせて、
+            <br className="hidden md:block" />
+            あなたの事業にぴったりのLPをお作りします。
+          </p>
+        </motion.div>
+
+        {/* Works Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 px-4 md:px-0">
+          {works.map((work, index) => (
+            <motion.div
+              key={work.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            >
+              <Card className="overflow-hidden border-0 shadow-soft-lg card-hover bg-white">
+                <div className="relative">
+                  {/* Status Badge */}
+                  <Badge className={`absolute top-4 right-4 z-10 ${getStatusColor(work.status)}`}>
+                    {work.status}
+                  </Badge>
+                  
+                  {/* Image */}
+                  <div className="aspect-[3/4] md:aspect-[4/5] bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center p-6 md:p-8">
+                    <img
+                      src={work.image}
+                      alt={work.title}
+                      className="max-h-full w-auto object-contain drop-shadow-lg"
+                    />
+                  </div>
+                </div>
+                
+                <CardContent className="p-5 md:p-6">
+                  {/* Category */}
+                  <span className="text-xs md:text-sm text-muted-foreground">
+                    {work.category}
+                  </span>
+                  
+                  {/* Title */}
+                  <h3 className="font-bold text-lg md:text-xl mt-1 mb-3">
+                    {work.title}
+                  </h3>
+                  
+                  {/* Features */}
+                  <div className="flex flex-wrap gap-2">
+                    {work.features.map((feature, featureIndex) => (
+                      <div
+                        key={featureIndex}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary text-xs md:text-sm"
+                      >
+                        <feature.icon className="w-3.5 h-3.5 text-[#4ECDC4]" />
+                        <span>{feature.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Note */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="mt-10 md:mt-14 text-center px-4"
+        >
+          <p className="text-sm md:text-base text-muted-foreground">
+            ※サンプルは制作イメージです。
+            <br />
+            実際のデザインはご要望に合わせてカスタマイズします。
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
