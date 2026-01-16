@@ -30,8 +30,8 @@ export default function WorksSection() {
       category: "フィットネス",
       image: "/images/pilates-lp-mockup-real.png",
       features: [
-        { icon: Calendar, label: "カレンダー予約" },
-        { icon: Mail, label: "自動返信メール" },
+        { icon: Mail, label: "自動返信メール設定" },
+        { icon: Bell, label: "運営者への通知設定" },
       ],
       status: "完成",
       lpUrl: "https://tokitoto77.github.io/portfolio-lp2",
@@ -122,7 +122,7 @@ export default function WorksSection() {
                   <Badge className={`absolute top-4 right-4 z-10 ${getStatusColor(work.status)}`}>
                     {work.status}
                   </Badge>
-                  
+
                   {/* Image */}
                   <div className="aspect-[3/4] md:aspect-[4/5] bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center p-6 md:p-8">
                     <img
@@ -132,18 +132,18 @@ export default function WorksSection() {
                     />
                   </div>
                 </div>
-                
+
                 <CardContent className="p-5 md:p-6">
                   {/* Category */}
                   <span className="text-xs md:text-sm text-muted-foreground">
                     {work.category}
                   </span>
-                  
+
                   {/* Title */}
                   <h3 className="font-bold text-lg md:text-xl mt-1 mb-3">
                     {work.title}
                   </h3>
-                  
+
                   {/* Features */}
                   <div className="flex flex-wrap gap-2 mb-4">
                     {work.features.map((feature, featureIndex) => (
