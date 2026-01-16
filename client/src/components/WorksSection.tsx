@@ -2,11 +2,13 @@
  * Works Section Component
  * Design: 制作事例を紹介するセクション
  * スマホファースト・日本語表記
+ * LPリンクと提案書PDFリンク付き
  */
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Mail, Bell, FileSpreadsheet } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Calendar, Mail, Bell, FileSpreadsheet, ExternalLink, FileText } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface Work {
@@ -16,6 +18,8 @@ interface Work {
   image: string;
   features: { icon: React.ElementType; label: string }[];
   status: "完成" | "制作中" | "サンプル";
+  lpUrl?: string;
+  proposalUrl?: string;
 }
 
 export default function WorksSection() {
@@ -30,6 +34,8 @@ export default function WorksSection() {
         { icon: Mail, label: "自動返信メール" },
       ],
       status: "完成",
+      lpUrl: "https://tokitoto77.github.io/portfolio-lp2",
+      proposalUrl: "/docs/pilates-proposal.pdf",
     },
     {
       id: 2,
@@ -139,7 +145,7 @@ export default function WorksSection() {
                   </h3>
                   
                   {/* Features */}
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mb-4">
                     {work.features.map((feature, featureIndex) => (
                       <div
                         key={featureIndex}
@@ -150,6 +156,38 @@ export default function WorksSection() {
                       </div>
                     ))}
                   </div>
+
+                  {/* Action Buttons */}
+                  {(work.lpUrl || work.proposalUrl) && (
+                    <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-gray-100">
+                      {work.lpUrl && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="flex-1 gap-2 text-[#FF6B35] border-[#FF6B35] hover:bg-[#FF6B35]/10"
+                          asChild
+                        >
+                          <a href={work.lpUrl} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="w-4 h-4" />
+                            LPを見る
+                          </a>
+                        </Button>
+                      )}
+                      {work.proposalUrl && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="flex-1 gap-2 text-[#4ECDC4] border-[#4ECDC4] hover:bg-[#4ECDC4]/10"
+                          asChild
+                        >
+                          <a href={work.proposalUrl} target="_blank" rel="noopener noreferrer">
+                            <FileText className="w-4 h-4" />
+                            提案書を見る
+                          </a>
+                        </Button>
+                      )}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </motion.div>
