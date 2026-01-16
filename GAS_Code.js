@@ -1,37 +1,66 @@
 // ==================================================
-// 設定エリア（ここだけ変更してください）
+// 設定エリア
 // ==================================================
-var spreadsheetId = 'ここにスプレッドシートIDを貼る';
-var calendarId = 'ここにカレンダーIDを貼る';
+var spreadsheetId = '1ulngUkF1HaUb_OnAPC11BhYj2WWkMcD_Jj0CZL5jpIg';
+var calendarId = 'f67c332598f23cf3240d6c57fed1846620ad05481f069c81fed6e29b2df8a5f4@group.calendar.google.com';
 // ==================================================
 
 function doGet(e) {
-    // スケジュール取得APIとして機能
-    if (e.parameter.action == 'reserve') {
-        return handleReservation(e);
-    } else {
-        return getSchedule(e);
+    try {
+        if (e && e.parameter && e.parameter.action == 'reserve') {
+            return handleReservation(e);
+        } else {
+            return getSchedule(e);
+        }
+    } catch (err) {
+        return createErrorResponse("System Error in doGet: " + err.toString());
     }
 }
 
 function doPost(e) {
-    // フォームからの送信を受け取る
-    return handleReservation(e);
+    try {
+        return handleReservation(e);
+    } catch (err) {
+        return createErrorResponse("System Error in doPost: " + err.toString());
+    }
 }
 
 // --------------------------------------------------
 // スケジュール取得機能
 // --------------------------------------------------
 function getSchedule(e) {
-    var cal = CalendarApp.getCalendarById(calendarId);
+    var cal;
+    try {
+        cal = CalendarApp.getCalendarById(calendarId);
+    } catch (err) {
+        console.log("Calendar ID Error: " + err);
+    }
+
+    if (!cal) {
+        console.log("Calendar not found. ID: " + calendarId);
+        var dummy = [{
+            date: "1/1 (Err)", weekDay: "-", startTime: "00:00", endTime: "00:00",
+            title: "カレンダー設定エラー", type: "Basic", status: "×"
+        }];
+        return createJSONOutput(dummy);
+    }
+
     var now = new Date();
-    // 今日から2週間分取得
     var endTime = new Date();
     endTime.setDate(now.getDate() + 14);
 
-    var events = cal.getEvents(now, endTime);
-    var result = [];
+    var events = [];
+    try {
+        events = cal.getEvents(now, endTime);
+    } catch (err) {
+        console.log("getEvents Error: " + err);
+        return createJSONOutput([{
+            date: "Error", weekDay: "-", startTime: "--:--", endTime: "--:--",
+            title: "カレンダーアクセス権限エラー", type: "Basic", status: "×"
+        }]);
+    }
 
+    var result = [];
     var weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     for (var i = 0; i < events.length; i++) {
@@ -40,11 +69,9 @@ function getSchedule(e) {
         var startTime = evt.getStartTime();
         var endTime = evt.getEndTime();
 
-        // ステータス判定
         var status = '◎';
         var simpleTitle = title;
 
-        // タイトルから【満】【残x】などを抽出
         if (title.match(/[【\[]満[】\]]/)) {
             status = '×';
             simpleTitle = title.replace(/[【\[]満[】\]]/g, '').trim();
@@ -53,7 +80,6 @@ function getSchedule(e) {
             simpleTitle = title.replace(/[【\[]残\d+[】\]]/g, '').trim();
         }
 
-        // 時間フォーマット (HH:mm)
         var startStr = Utilities.formatDate(startTime, Session.getScriptTimeZone(), 'H:mm');
         var endStr = Utilities.formatDate(endTime, Session.getScriptTimeZone(), 'H:mm');
         var dateStr = Utilities.formatDate(startTime, Session.getScriptTimeZone(), 'M/d');
@@ -65,164 +91,140 @@ function getSchedule(e) {
             startTime: startStr,
             endTime: endStr,
             title: simpleTitle,
-            type: simpleTitle, // 色分け用にタイトルをそのままtypeとしても使う
+            type: simpleTitle,
             status: status
         });
     }
 
-    // JSONを返す
-    var output = ContentService.createTextOutput(JSON.stringify(result));
-    output.setMimeType(ContentService.MimeType.JSON);
-    return output;
+    return createJSONOutput(result);
 }
 
 // --------------------------------------------------
 // 予約受付機能
 // --------------------------------------------------
 function handleReservation(e) {
-    var data;
+    var data = {};
 
-    // POSTデータ（JSON）をパース
     try {
-        data = JSON.parse(e.postData.contents);
-    } catch (f) {
-        // GETパラメータの場合（デバッグ用）
-        data = e.parameter;
+        if (e.postData && e.postData.contents) {
+            data = JSON.parse(e.postData.contents);
+        } else if (e.parameter) {
+            data = e.parameter;
+        }
+    } catch (err) {
+        if (e && e.parameter) data = e.parameter;
+    }
+
+    if (!data || Object.keys(data).length === 0) {
+        return createJSONOutput({ result: 'error', message: 'No data' });
     }
 
     var ss = SpreadsheetApp.openById(spreadsheetId);
-    var sheet = ss.getSheets()[0]; // 1枚目のシートを使う
+    var sheet = ss.getSheets()[0];
 
-    /*
-      基本方針:
-      フォームからは以下のデータが来る想定。
-      data.last_name, data.first_name, data.email, data.phone,
-      data.course (メニュー名), data.date_time ("2026/1/7 10:00 - 11:00")
-    */
-
-    var name = data.last_name + ' ' + data.first_name;
-    var email = data.email;
-    var phone = data.phone;
-    var course = data.course; // "体験レッスン..."
+    var name = (data.last_name || '') + ' ' + (data.first_name || '');
+    var email = data.email || '';
+    var phone = data.phone || '';
+    var course = data.course || '';
     var dateTimeStr = data.date_time || "";
     var message = data.message || "";
 
-    // 日時文字列から「日付」「時間」を簡易抽出
-    // "2026/1/7 10:00 - 11:00" -> "2026/1/7", "10:00"
     var datePart = "";
     var timePart = "";
-
-    // 正規表現で日付と開始時間を抜き出す
-    // 例: 2026/1/7 10:00...
     var match = dateTimeStr.match(/(\d{4}\/\d{1,2}\/\d{1,2})\s+(\d{1,2}:\d{2})/);
     if (match) {
         datePart = match[1];
         timePart = match[2];
     } else {
-        // マッチしなかった場合はそのまま使う（エラー回避）
         datePart = dateTimeStr;
-        timePart = "";
     }
 
-    //-----------------------------------------------------
-    // 1. スプレッドシートに保存
-    //-----------------------------------------------------
-    // 列順序: 日時(タイムスタンプ), 名前, Email, 電話, 予約希望日時, コース, 備考
     sheet.appendRow([new Date(), name, email, phone, dateTimeStr, course, message]);
 
-    //-----------------------------------------------------
-    // 2. 自動返信メール送信
-    //-----------------------------------------------------
-    var subject = "【CORE SHAPE PILATES】ご予約ありがとうございます";
-    var body = name + " 様\n\n"
-        + "体験レッスンのご予約ありがとうございます。\n"
-        + "以下の内容で承りました。\n\n"
-        + "■予約日時: " + dateTimeStr + "\n"
-        + "■コース: " + course + "\n\n"
-        + "当日は5分前までにお越しください。\n"
-        + "お待ちしております。\n\n"
-        + "--------------------------------------------------\n"
-        + "CORE SHAPE PILATES\n"
-        + "東京都渋谷区道玄坂1-2-3\n"
-        + "--------------------------------------------------";
-
-    MailApp.sendEmail(email, subject, body);
-
-    //-----------------------------------------------------
-    // 3. カレンダー更新（定員管理）
-    //-----------------------------------------------------
-    // 抽出した日付と時間を使ってカレンダーを検索
-    if (datePart && timePart) {
-        // datePart: "2026/1/7" -> "1/7" 形式に変換（カレンダー検索用）
-        // updateCalendarCapacity関数に合わせて調整
-        var simpleDate = datePart.split('/').slice(1).join('/'); // "1/7"
-        updateCalendarCapacity(simpleDate, timePart, course);
-    } else {
-        // 万が一抽出できなかった場合はスキップ
-        console.log("日時フォーマットが解析できませんでした: " + dateTimeStr);
+    if (email) {
+        var subject = "【CORE SHAPE PILATES】体験レッスンのご予約ありがとうございます";
+        var body = name + " 様\n\n"
+            + "CORE SHAPE PILATES へご予約いただき、誠にありがとうございます。\n"
+            + "以下の内容で体験レッスンのご予約を承りました。\n\n"
+            + "━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            + "■ご予約内容\n"
+            + "━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            + "・日時: " + dateTimeStr + "\n"
+            + "・コース: " + course + "\n"
+            + "・料金: 2,000円（当日お支払い）\n\n"
+            + "━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            + "■当日のご案内\n"
+            + "━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+            + "・開始時間の5分前までにお越しください。\n"
+            + "・動きやすい服装、水分補給用のお飲み物、タオルをご持参ください。\n"
+            + "・更衣室をご利用いただけます。\n\n"
+            + "ご不明な点がございましたら、お気軽にお問い合わせください。\n"
+            + "当日お会いできるのを楽しみにしております。\n\n"
+            + "--------------------------------------------------\n"
+            + "CORE SHAPE PILATES\n"
+            + "〒150-0043 東京都渋谷区道玄坂1-2-3\n"
+            + "Email: example@email.com\n"
+            + "--------------------------------------------------";
+        try {
+            MailApp.sendEmail(email, subject, body);
+        } catch (e) {
+            console.log("Mail Error: " + e);
+        }
     }
 
-    // 完了メッセージを返す
-    var result = { result: 'success' };
-    var output = ContentService.createTextOutput(JSON.stringify(result));
-    output.setMimeType(ContentService.MimeType.JSON);
-    return output;
+    if (datePart && timePart) {
+        var simpleDate = datePart.split('/').slice(1).join('/');
+        try {
+            updateCalendarCapacity(simpleDate, timePart, course);
+        } catch (err) {
+            console.log("Calendar Update Error: " + err);
+        }
+    }
+
+    return createJSONOutput({ result: 'success' });
 }
 
-// --------------------------------------------------
-// カレンダー更新機能（残席管理）
-// --------------------------------------------------
 function updateCalendarCapacity(dateStr, timeStr, menuName) {
     var cal = CalendarApp.getCalendarById(calendarId);
-
-    // 日時をDateオブジェクトに変換（開始時間を特定）
-    // dateStr: "2024-01-15", timeStr: "10:00" 想定
-    // ※予約フォームから来るフォーマットに合わせる必要があります
-    // ここでは "1/15" 形式で来ると仮定して処理（年は現在年）
+    if (!cal) return;
 
     var now = new Date();
     var year = now.getFullYear();
     var month = parseInt(dateStr.split('/')[0]) - 1;
     var day = parseInt(dateStr.split('/')[1]);
-
     var hour = parseInt(timeStr.split(':')[0]);
     var minute = parseInt(timeStr.split(':')[1]);
 
     var startTime = new Date(year, month, day, hour, minute);
-    var endTime = new Date(startTime.getTime() + (60 * 60 * 1000)); // 1時間後まで検索
+    var endTime = new Date(startTime.getTime() + (60 * 60 * 1000));
 
-    // イベント検索
     var events = cal.getEvents(startTime, endTime);
 
     for (var i = 0; i < events.length; i++) {
         var evt = events[i];
         var title = evt.getTitle();
-
-        // メニュー名が含まれているか確認
-        // （完全一致でなくても、同じ時間帯のイベントなら対象とする簡易ロジック）
-
         var newTitle = title;
-
-        // 【残x】を探す
         var match = title.match(/[【\[]残(\d+)[】\]]/);
         if (match) {
             var currentCount = parseInt(match[1]);
             var nextCount = currentCount - 1;
-
             if (nextCount <= 0) {
-                // 0になったら満席にする
                 newTitle = title.replace(match[0], '【満】');
             } else {
-                // 数を減らす
                 newTitle = title.replace(match[0], '【残' + nextCount + '】');
             }
-
-            evt.setTitle(newTitle); // カレンダー更新
-            break; // 1つ更新したら終了
+            evt.setTitle(newTitle);
+            break;
         }
     }
 }
 
-function testAuth() {
-    console.log("認証テスト完了");
+function createJSONOutput(obj) {
+    var output = ContentService.createTextOutput(JSON.stringify(obj));
+    output.setMimeType(ContentService.MimeType.JSON);
+    return output;
+}
+
+function createErrorResponse(msg) {
+    return createJSONOutput({ result: 'error', message: msg });
 }

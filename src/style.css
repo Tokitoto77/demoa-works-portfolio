@@ -1249,3 +1249,295 @@ h6 {
     display: table-row !important; /* Force show on desktop */
   }
 }
+
+/* =========================================
+   Mobile UI Redesign (Hero Section)
+   ========================================= */
+
+:root {
+  --hero-card-bg: #EBB595; /* Warm Peach/Orange from reference */
+  --hero-card-text: #5A4D45; /* Dark brown text */
+}
+
+/* Mobile Hero Container */
+.mobile-hero-container {
+  padding: 100px 20px 40px; /* Top padding for fixed header */
+  background: #FDFBF9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* 1. The Orange Card */
+.hero-card {
+  background-color: var(--hero-card-bg);
+  border-radius: 30px;
+  padding: 20px 20px 80px; /* Extra bottom padding for overlap */
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(235, 181, 149, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+.hero-card__image-wrapper {
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: white; /* Fallback */
+  aspect-ratio: 4/3;
+}
+
+.hero-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-card__title {
+  font-family: var(--font-base);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--hero-card-text);
+  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+}
+
+.hero-card__badge {
+  display: inline-block;
+  background-color: #8FA89B; /* Sage green from reference pill */
+  color: white;
+  padding: 8px 24px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+/* 2. The Floating Booking Widget */
+.booking-widget {
+  background: white;
+  border-radius: 24px;
+  padding: 24px;
+  width: 90%;
+  max-width: 360px;
+  margin-top: -60px; /* Overlap effect */
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 2;
+}
+
+.booking-widget__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.booking-widget__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.booking-widget__nav-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text-light);
+  cursor: pointer;
+}
+
+/* Calendar Grid Mockup */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.calendar-day-header {
+  font-size: 0.7rem;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+
+.calendar-day {
+  font-size: 0.9rem;
+  padding: 6px;
+  border-radius: 50%;
+  color: var(--text-dark);
+  cursor: pointer;
+}
+
+.calendar-day.active {
+  background-color: var(--hero-card-bg);
+  color: white;
+  font-weight: bold;
+}
+
+.calendar-day.disabled {
+  color: #ddd;
+}
+
+/* Time Grid Mockup */
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.time-slot {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 8px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.time-slot:hover {
+  border-color: var(--hero-card-bg);
+}
+
+.time-slot.active {
+  background-color: var(--hero-card-bg);
+  color: white;
+  border-color: var(--hero-card-bg);
+}
+
+/* Checkbox area */
+.widget-options {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 0.8rem;
+  color: var(--text-light);
+}
+
+/* Reserve Button inside widget */
+.btn-widget-reserve {
+  width: 100%;
+  padding: 16px;
+  background: var(--hero-card-bg);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(235, 181, 149, 0.4);
+  transition: transform 0.2s;
+}
+
+.btn-widget-reserve:active {
+  transform: scale(0.98);
+}
+
+/* Desktop Handling */
+@media (min-width: 1024px) {
+  .mobile-hero-container {
+    flex-direction: row;
+    justify-content: center;
+    gap: 60px;
+    padding: 160px 40px 80px;
+    align-items: center;
+  }
+
+  .hero-card {
+    margin: 0;
+    padding-bottom: 30px; /* Remove overlap padding for side-by-side */
+    max-width: 450px;
+  }
+
+  .booking-widget {
+    margin-top: 0;
+    width: 100%;
+    max-width: 380px;
+  }
+}
+
+/* Calendar Widget Status Upgrade */
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  gap: 2px;
+}
+
+.day-status {
+  font-size: 0.65rem;
+  line-height: 1;
+}
+
+.calendar-day.active .day-status {
+  color: white; /* White when active */
+}
+
+/* Status Colors */
+.status-◎ { color: var(--primary-color); }
+.status-△ { color: #f0ad4e; }
+.status-× { color: #d9534f; }
+.status-満 { color: #d9534f; }
+
+/* Override active state color override for status */
+.calendar-day:not(.active) .status-× { color: #ccc; } /* Gray out full days if not active? Actually red is better for "full" warning. Keep red. */
+
+/* Empathy Section Redesign (Split Layout) */
+.checklist-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.checklist-image {
+  width: 100%;
+  height: 250px; /* Mobile height */
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--glass-shadow);
+}
+
+.checklist-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.checklist-content {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .checklist-wrapper {
+    flex-direction: row;
+    align-items: stretch;
+    gap: var(--spacing-lg);
+  }
+
+  .checklist-image {
+    flex: 1;
+    height: auto;
+    min-height: 400px;
+  }
+
+  .checklist-content {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}

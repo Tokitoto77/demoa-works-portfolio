@@ -34,7 +34,6 @@
         </ul>
       </nav>
       <div class="header__actions">
-        <a href="schedule.html" class="btn btn--sub desktop-only">空き状況を見る</a>
         <a href="reservation.html?type=trial" class="btn btn--primary">体験を予約する</a>
       </div>
       <button class="mobile-menu-btn" aria-label="Menu">
@@ -47,60 +46,58 @@
 
   <main>
     <!-- FV -->
-    <section class="hero">
-      <div class="hero__bg-container">
-        <img src="./hero_bg.png" alt="Pilates Studio Ambient" class="hero__bg-image">
-        <div class="hero__overlay"></div>
+    <!-- Mobile Hero Redesign -->
+    <div class="mobile-hero-container">
+      <div class="hero-card">
+        <div class="hero-card__image-wrapper">
+          <img src="./hero_bg.png" alt="Pilates Studio" class="hero-card__image">
+        </div>
+        <div class="hero-card__logo-area" style="margin-bottom: 10px; opacity: 0.8;">
+          <small style="letter-spacing: 0.2em; text-transform: uppercase;">Pilates Studio</small>
+        </div>
+        <h1 class="hero-card__title">ピラティス体験予約</h1>
+        <div class="hero-card__badge">初回限定特別価格</div>
       </div>
-      <div class="hero__content container">
-        <h1 class="hero__catch">
-          <span class="hero__catch-line">姿勢が整うと、</span>
-          <span class="hero__catch-line">ボディラインはもっと</span>
-          <span class="hero__catch-line em-text">キレイになる。</span>
-        </h1>
-        <p class="hero__sub">
+
+      <div class="booking-widget">
+        <div class="booking-widget__header">
+          <a href="schedule.html">
+            <h2 class="booking-widget__title" style="display:flex; align-items:center; gap:8px;">予約カレンダー <span
+                style="font-size:0.8em; color:var(--primary-color);">›</span></h2>
+          </a>
+        </div>
+
+        <!-- Calendar Days Mockup -> Dynamic Container -->
+        <div class="calendar-grid" id="widget-calendar-grid">
+          <!-- JS will render here -->
+        </div>
+
+        <!-- Time Slots Mockup -> Dynamic Container -->
+        <div class="time-grid" id="widget-time-grid">
+          <!-- JS will render here -->
+        </div>
+
+        <div class="widget-options">
+          <input type="checkbox" id="details" checked>
+          <label for="details">詳細を表示</label>
+        </div>
+
+        <a href="#" class="btn-widget-reserve" id="widget-reserve-btn">日時を選択してください</a>
+      </div>
+    </div>
+
+    <!-- Intro / Catch Copy (Preserved) -->
+    <section class="intro section-padding text-center" style="padding-top: 0;">
+      <div class="container">
+        <h2 class="hero__catch" style="margin-bottom: 2rem;">
+          <span class="hero__catch-line" style="font-size: 1.8rem;">姿勢が整うと、</span>
+          <span class="hero__catch-line" style="font-size: 1.8rem;">ボディラインはもっと</span>
+          <span class="hero__catch-line em-text" style="font-size: 2.2rem;">キレイになる。</span>
+        </h2>
+        <p class="hero__sub" style="margin: 0 auto;">
           少人数制（最大4名）で、マット＋マシンを使い分け。<br>
-          運動が得意じゃなくても、フォームから一緒に整えます。<br>
-          <span class="target-message">（デスクワークで「反り腰・猫背・肩こり」が気になる方へ）</span>
+          運動が得意じゃなくても、フォームから一緒に整えます。
         </p>
-
-        <div class="hero__benefits">
-          <div class="benefit-card glass">
-            <span class="benefit-icon">📋</span>
-            <p>姿勢のクセ診断<br>（3つのチェック）</p>
-          </div>
-          <div class="benefit-card glass">
-            <span class="benefit-icon">✨</span>
-            <p>今日のフォーム修正<br>ポイント（1つ）</p>
-          </div>
-          <div class="benefit-card glass">
-            <span class="benefit-icon">🏠</span>
-            <p>家で30秒の宿題<br>（1つ）</p>
-          </div>
-        </div>
-
-        <p class="hero__sub-benefit"
-          style="margin-top: 1rem; margin-bottom: 2rem; font-weight: 700; display: inline-block; color: var(--primary-color); background: rgba(255,255,255,0.95); padding: 12px 24px; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); backdrop-filter: blur(4px);">
-          体験後に“あなた用の姿勢メモ”をお渡しします
-        </p>
-
-        <div class="hero__offer offer-box glass">
-          <div class="offer-box__header">初回体験</div>
-          <div class="offer-box__price">
-            <span class="currency">¥</span>2,000<span class="time">（60分）</span>
-          </div>
-          <p class="offer-box__note">🔰 初心者9割 / 手ぶらOK（ウェア・タオル・水・マット完備）</p>
-          <a href="reservation.html?type=trial" class="btn btn--cta glow">体験を予約する <span
-              class="btn-subtext">（24時間受付中）</span></a>
-          <p class="offer-box__sub-note">当日予約OK・Webで完結</p>
-        </div>
-
-        <div class="hero__trust">
-          <span class="trust-badge">少人数制（最大4名）</span>
-          <span class="trust-badge">マット＋マシン両対応</span>
-          <span class="trust-badge">有資格インストラクター</span>
-          <span class="trust-badge">初心者歓迎</span>
-        </div>
       </div>
     </section>
 
@@ -113,35 +110,45 @@
             <span class="accent-text">身体が“整ってない”</span>感じがする…
           </h2>
         </div>
-        <div class="checklist-container glass">
-          <ul class="checklist">
-            <li class="checklist__item">
-              <span class="check-icon">✓</span>
-              <span>写真で姿勢が気になる（猫背・反り腰）</span>
-            </li>
-            <li class="checklist__item">
-              <span class="check-icon">✓</span>
-              <span>お腹だけ戻りにくい</span>
-            </li>
-            <li class="checklist__item">
-              <span class="check-icon">✓</span>
-              <span>肩や首がこりやすい</span>
-            </li>
-            <li class="checklist__item">
-              <span class="check-icon">✓</span>
-              <span>下半身が張りやすい</span>
-            </li>
-            <li class="checklist__item">
-              <span class="check-icon">✓</span>
-              <span>自己流トレが続かない、フォームが不安</span>
-            </li>
-            <li class="checklist__item">
-              <span class="check-icon">✓</span>
-              <span>運動すると逆にどこかが痛くなる</span>
-            </li>
-          </ul>
-          <div class="empathy__summary text-center">
-            <p>それ、気合い不足ではなく <strong>身体の使い方のクセ</strong>かもしれません。</p>
+        <div class="checklist-wrapper">
+          <div class="checklist-image">
+            <!-- Placeholder: The user asked for a Japanese person image. -->
+            <!-- Since generation failed, I'm using hero_bg.png as a placeholder layout. -->
+            <div
+              style="width:100%; height:100%; background:#e0e0e0; display:flex; align-items:center; justify-content:center; color:#888;">
+              <img src="./hero_bg.png" alt="Pilates" style="opacity:0.8;">
+            </div>
+          </div>
+          <div class="checklist-content glass">
+            <ul class="checklist">
+              <li class="checklist__item">
+                <span class="check-icon">✓</span>
+                <span>写真で姿勢が気になる（猫背・反り腰）</span>
+              </li>
+              <li class="checklist__item">
+                <span class="check-icon">✓</span>
+                <span>お腹だけ戻りにくい</span>
+              </li>
+              <li class="checklist__item">
+                <span class="check-icon">✓</span>
+                <span>肩や首がこりやすい</span>
+              </li>
+              <li class="checklist__item">
+                <span class="check-icon">✓</span>
+                <span>下半身が張りやすい</span>
+              </li>
+              <li class="checklist__item">
+                <span class="check-icon">✓</span>
+                <span>自己流トレが続かない、フォームが不安</span>
+              </li>
+              <li class="checklist__item">
+                <span class="check-icon">✓</span>
+                <span>運動すると逆にどこかが痛くなる</span>
+              </li>
+            </ul>
+            <div class="empathy__summary text-center">
+              <p>それ、気合い不足ではなく <strong>身体の使い方のクセ</strong>かもしれません。</p>
+            </div>
           </div>
         </div>
       </div>
@@ -516,10 +523,10 @@
     </footer>
   </main>
   <div class="mobile-menu-cta">
-    <a href="schedule.html" class="btn-schedule">空き状況を見る</a>
-    <a href="reservation.html?type=trial" class="btn-reserve">体験を予約する</a>
+    <a href="reservation.html?type=trial" class="btn-reserve" style="width: 100%; border-radius: 50px;">体験を予約する</a>
   </div>
   <script type="module" src="/src/main.js"></script>
+  <script type="module" src="/src/top-calendar.js"></script>
 </body>
 
 </html>
