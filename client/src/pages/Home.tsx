@@ -11,6 +11,7 @@ import MonitorSection from "@/components/MonitorSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import WorksSection from "@/components/WorksSection";
 import AboutSection from "@/components/AboutSection";
+import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
@@ -24,6 +25,7 @@ export default function Home() {
         <FeaturesSection />
         <WorksSection />
         <AboutSection />
+        <FAQSection />
         <CTASection />
       </main>
       <Footer />

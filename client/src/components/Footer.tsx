@@ -20,6 +20,7 @@ export default function Footer() {
     { label: "できること", href: "#features" },
     { label: "制作事例", href: "#works" },
     { label: "自己紹介", href: "#about" },
+    { label: "FAQ", href: "#faq" },
   ];
 
   return (

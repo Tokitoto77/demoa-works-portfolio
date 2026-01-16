@@ -15,6 +15,7 @@ export default function Header() {
     { label: "できること", href: "#features" },
     { label: "制作事例", href: "#works" },
     { label: "自己紹介", href: "#about" },
+    { label: "FAQ", href: "#faq" },
   ];
 
   const scrollToSection = (href: string) => {
