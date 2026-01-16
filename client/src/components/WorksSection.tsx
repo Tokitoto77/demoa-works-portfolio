@@ -24,7 +24,7 @@ export default function WorksSection() {
       id: 1,
       title: "ピラティススタジオ 体験予約LP",
       category: "フィットネス",
-      image: "/images/pilates-lp-jp.png",
+      image: "/images/pilates-lp-mockup-real.png",
       features: [
         { icon: Calendar, label: "カレンダー予約" },
         { icon: Mail, label: "自動返信メール" },
