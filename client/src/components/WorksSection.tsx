@@ -30,8 +30,8 @@ export default function WorksSection() {
       category: "フィットネス",
       image: "/images/pilates-lp-mockup-real.png",
       features: [
-        { icon: Mail, label: "自動返信メール設定" },
-        { icon: Bell, label: "運営者への通知設定" },
+        { icon: Mail, label: "自動返信メール" },
+        { icon: Bell, label: "運営者通知" },
       ],
       status: "完成",
       lpUrl: "https://tokitoto77.github.io/portfolio-lp2",
