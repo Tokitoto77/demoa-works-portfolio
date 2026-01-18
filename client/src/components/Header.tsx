@@ -40,7 +40,7 @@ export default function Header() {
             }}
           >
             <img
-              src="/images/logo.png"
+              src="/src/assets/logo.png"
               alt="Demoa-works"
               className="h-14 md:h-20 w-auto object-contain transition-transform hover:scale-105"
             />
