@@ -31,13 +31,17 @@ export default function Footer() {
           <div className="text-center mb-8">
             <a
               href="#"
-              className="inline-block font-display font-bold text-2xl text-gradient-sunset"
+              className="inline-block"
               onClick={(e) => {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
             >
-              Demoa-works
+              <img
+                src="/src/assets/logo.png"
+                alt="Demoa-works"
+                className="h-10 md:h-12 w-auto mx-auto object-contain"
+              />
             </a>
             <p className="text-sm text-muted-foreground mt-2">
               LP制作 × GAS連携 で業務自動化をサポート

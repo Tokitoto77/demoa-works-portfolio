@@ -30,8 +30,9 @@ export default function WorksSection() {
       category: "フィットネス",
       image: "/images/pilates-lp-mockup-real.png",
       features: [
-        { icon: Mail, label: "自動返信メール" },
-        { icon: Bell, label: "運営者通知" },
+        { icon: FileSpreadsheet, label: "スプレッドシート連携" },
+        { icon: Mail, label: "自動配信メール" },
+        { icon: Bell, label: "管理者通知" },
       ],
       status: "完成",
       lpUrl: "https://tokitoto77.github.io/portfolio-lp2",
@@ -124,20 +125,50 @@ export default function WorksSection() {
                   </Badge>
 
                   {/* Image */}
-                  <div className="aspect-[3/4] md:aspect-[4/5] bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center p-6 md:p-8">
-                    <img
-                      src={work.image}
-                      alt={work.title}
-                      className="max-h-full w-auto object-contain drop-shadow-lg"
-                    />
+                  <div className="relative group/image overflow-hidden">
+                    <div className="aspect-[3/4] md:aspect-[4/5] bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center p-6 md:p-8 transition-transform duration-500 group-hover/image:scale-105">
+                      {work.lpUrl ? (
+                        <a
+                          href={work.lpUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative w-full h-full flex items-center justify-center cursor-pointer"
+                        >
+                          <img
+                            src={work.image}
+                            alt={work.title}
+                            className="max-h-full w-auto object-contain drop-shadow-lg"
+                          />
+                          {/* Hover Overlay for Mobile/PC */}
+                          <div className="absolute inset-0 bg-black/0 group-hover/image:bg-black/5 transition-colors flex items-center justify-center">
+                            <div className="opacity-0 group-hover/image:opacity-100 transition-opacity bg-white/90 p-3 rounded-full shadow-lg">
+                              <ExternalLink className="w-6 h-6 text-[#FF6B35]" />
+                            </div>
+                          </div>
+                        </a>
+                      ) : (
+                        <img
+                          src={work.image}
+                          alt={work.title}
+                          className="max-h-full w-auto object-contain drop-shadow-lg"
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
 
                 <CardContent className="p-5 md:p-6">
                   {/* Category */}
-                  <span className="text-xs md:text-sm text-muted-foreground">
-                    {work.category}
-                  </span>
+                  <div className="flex justify-between items-start mb-1">
+                    <span className="text-xs md:text-sm text-muted-foreground">
+                      {work.category}
+                    </span>
+                    {work.lpUrl && (
+                      <span className="text-[10px] bg-[#FF6B35]/10 text-[#FF6B35] px-2 py-0.5 rounded-full font-medium">
+                        タップでLP表示
+                      </span>
+                    )}
+                  </div>
 
                   {/* Title */}
                   <h3 className="font-bold text-lg md:text-xl mt-1 mb-3">

@@ -29,17 +29,21 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="container">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-20 md:h-24">
           {/* Logo */}
-          <a 
-            href="#" 
-            className="font-display font-bold text-xl md:text-2xl text-gradient-sunset"
+          <a
+            href="#"
+            className="flex items-center gap-2"
             onClick={(e) => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
-            Demoa-works
+            <img
+              src="/src/assets/logo.png"
+              alt="Demoa-works"
+              className="h-12 md:h-16 w-auto object-contain transition-transform hover:scale-105"
+            />
           </a>
 
           {/* Desktop Navigation */}
@@ -57,7 +61,7 @@ export default function Header() {
                 {item.label}
               </a>
             ))}
-            <Button 
+            <Button
               className="gradient-sunset text-white border-0 shadow-soft hover:opacity-90 transition-opacity"
               onClick={() => scrollToSection("#monitor")}
             >
@@ -92,7 +96,7 @@ export default function Header() {
                   {item.label}
                 </a>
               ))}
-              <Button 
+              <Button
                 className="gradient-sunset text-white border-0 shadow-soft hover:opacity-90 transition-opacity w-full mt-2"
                 onClick={() => scrollToSection("#monitor")}
               >
