@@ -38,7 +38,7 @@ export default function Footer() {
               }}
             >
               <img
-                src="/src/assets/logo.png"
+                src="/images/logo-horizontal.png"
                 alt="Demoa-works"
                 className="h-12 md:h-16 w-auto mx-auto object-contain"
               />
