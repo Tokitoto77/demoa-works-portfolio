@@ -40,7 +40,7 @@ export default function Footer() {
               <img
                 src="/src/assets/logo.png"
                 alt="Demoa-works"
-                className="h-10 md:h-12 w-auto mx-auto object-contain"
+                className="h-12 md:h-16 w-auto mx-auto object-contain"
               />
             </a>
             <p className="text-sm text-muted-foreground mt-2">

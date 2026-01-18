@@ -61,40 +61,54 @@ export default function AboutSection() {
             <Card className="border-0 shadow-soft-lg overflow-hidden mb-10 md:mb-14">
               <CardContent className="p-0">
                 <div className="md:flex">
-                  {/* Avatar Area */}
-                  <div className="md:w-1/3 bg-gradient-to-br from-[#FF6B35]/10 to-[#4ECDC4]/10 p-8 md:p-10 flex items-center justify-center">
-                    <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-white shadow-soft flex items-center justify-center">
-                      {/* Placeholder for avatar - user will replace */}
-                      <div className="w-28 h-28 md:w-36 md:h-36 rounded-full bg-gradient-to-br from-[#FF6B35]/20 to-[#4ECDC4]/20 flex items-center justify-center">
-                        <span className="text-4xl md:text-5xl font-bold text-gradient-sunset">D</span>
+                  {/* Avatar Area - Brand Identity Seal */}
+                  <div className="md:w-1/3 bg-gradient-to-br from-[#FF6B35]/5 to-[#4ECDC4]/5 p-8 md:p-10 flex items-center justify-center relative">
+                    {/* Soft background aura */}
+                    <div className="absolute inset-0 bg-white/40 backdrop-blur-sm md:hidden" />
+
+                    <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full bg-white shadow-soft-lg flex items-center justify-center p-2 border border-white/80 group/avatar">
+                      <div className="transition-transform duration-700 group-hover/avatar:scale-110">
+                        <img
+                          src="/src/assets/logo.png"
+                          alt="Demoa-works"
+                          className="w-full h-auto object-contain drop-shadow-sm scale-110"
+                        />
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Content Area */}
                   <div className="md:w-2/3 p-6 md:p-10">
-                    <h3 className="text-xl md:text-2xl font-bold mb-2">Demoa-works</h3>
+                    <h3 className="text-xl md:text-2xl font-bold mb-2 text-gradient-sunset">Demoa-works</h3>
                     <p className="text-sm md:text-base text-muted-foreground mb-4">
                       LP制作 × GAS連携 で業務自動化をサポート
                     </p>
-                    
-                    <div className="space-y-4 text-sm md:text-base leading-relaxed">
+
+                    <div className="space-y-4 text-sm md:text-base leading-relaxed text-[#34322d]">
                       <p>
-                        はじめまして。Demoa-worksです。
+                        Demoa-works は、
+                        <strong className="text-[#FF6B35]">LP制作と Google Apps Script（GAS）を組み合わせた業務自動化</strong>を強みとする制作サービスです。
                       </p>
                       <p>
-                        ITを使った自動化や効率化に興味があり、現在は通信大学でITの勉強をしています。
-                        学んだことを誰かの役に立てたいと思い、ココナラでLP制作を始めました。
+                        単に見た目の良いLPを作るだけでなく、
+                        フォーム送信後の自動返信、データの自動保存、予約管理など、
+                        <strong className="text-[#FF6B35]">集客後の手間を減らす仕組みまで含めて設計</strong>します。
+                        「毎回手作業で対応していた作業」を、できるだけ自動化することを目指します。
                       </p>
                       <p>
-                        私自身も一人で色々なことに挑戦しているので、
-                        <span className="text-[#FF6B35] font-medium">
-                          これから何かを始めたい方や、一人で頑張っている方
-                        </span>
-                        の気持ちがよく分かります。
+                        現在は通信大学でITを体系的に学びながら、
+                        学んだ技術を「実際に使える形」に落とし込み、LP制作に活かしています。
+                        学習で終わらせず、<strong className="text-[#FF6B35]">実務として価値を提供すること</strong>を大切にしています。
                       </p>
                       <p>
-                        集客や事務作業の効率化で、あなたの挑戦を応援させてください。
+                        納品前には、<strong className="text-[#FF6B35]">第三者による操作確認・誤字脱字チェック・表示崩れの確認</strong>を行い、
+                        複数の目で品質を確認する体制を取っています。
+                        制作自体は個人で行っていますが、品質管理は一人で完結させません。
+                      </p>
+                      <p className="pt-2">
+                        「一人で運営しているからこそ、無理のない仕組みを作りたい」<br />
+                        そんな方に寄り添いながら、
+                        集客や業務効率化を通して、<strong className="text-[#FF6B35]">本来やるべきことに集中できる環境</strong>をお手伝いします。
                       </p>
                     </div>
                   </div>
