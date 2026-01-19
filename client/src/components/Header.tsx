@@ -63,9 +63,9 @@ export default function Header() {
             ))}
             <Button
               className="gradient-sunset text-white border-0 shadow-soft hover:opacity-90 transition-opacity"
-              onClick={() => scrollToSection("#monitor")}
+              onClick={() => window.open("https://coconala.com/services/4032014", "_blank")}
             >
-              お問い合わせ
+              ココナラで相談する
             </Button>
           </nav>
 
@@ -98,9 +98,9 @@ export default function Header() {
               ))}
               <Button
                 className="gradient-sunset text-white border-0 shadow-soft hover:opacity-90 transition-opacity w-full mt-2"
-                onClick={() => scrollToSection("#monitor")}
+                onClick={() => window.open("https://coconala.com/services/4032014", "_blank")}
               >
-                お問い合わせ
+                ココナラで相談する
               </Button>
             </div>
           </nav>

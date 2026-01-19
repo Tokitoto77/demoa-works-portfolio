@@ -39,7 +39,7 @@ export default function CTASection() {
             <Button
               size="lg"
               className="w-full sm:w-auto bg-white text-[#FF6B35] hover:bg-white/90 shadow-soft-lg text-base md:text-lg px-8 py-6 rounded-xl"
-              onClick={() => window.open("https://coconala.com/", "_blank")}
+              onClick={() => window.open("https://coconala.com/services/4032014", "_blank")}
             >
               <MessageCircle className="w-5 h-5 mr-2" />
               ココナラで相談する
