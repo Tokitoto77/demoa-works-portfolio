@@ -92,7 +92,7 @@ export default function MonitorSection() {
               {/* CTA */}
               <Button
                 className="w-full gradient-sunset text-white border-0 shadow-soft hover:opacity-90 transition-opacity py-6 text-base md:text-lg rounded-xl"
-                onClick={() => window.open("https://coconala.com/", "_blank")}
+                onClick={() => window.open("https://coconala.com/services/4032014", "_blank")}
               >
                 ココナラで相談する
               </Button>
