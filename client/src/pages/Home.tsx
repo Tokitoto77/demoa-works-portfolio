@@ -12,6 +12,7 @@ import FeaturesSection from "@/components/FeaturesSection";
 import WorksSection from "@/components/WorksSection";
 import AboutSection from "@/components/AboutSection";
 import FAQSection from "@/components/FAQSection";
+import ServiceDetailSection from "@/components/ServiceDetailSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
@@ -26,6 +27,7 @@ export default function Home() {
         <WorksSection />
         <AboutSection />
         <FAQSection />
+        <ServiceDetailSection />
         <CTASection />
       </main>
       <Footer />
