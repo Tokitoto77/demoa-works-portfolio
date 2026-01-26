@@ -176,31 +176,13 @@ export default function WorksSection() {
                   {/* Features */}
                   <div className="flex flex-wrap gap-2 mb-4">
                     {work.features.map((feature, featureIndex) => {
-                      const getFeatureTooltip = (label: string) => {
-                        switch (label) {
-                          case "Google Forms連携":
-                            return "フォーム送信が自動的にGoogle Formsに記録されます";
-                          case "スプレッドシート連携":
-                            return "データが自動的にスプレッドシートに保存されます";
-                          case "管理者通知":
-                            return "新規申し込みを管理者にLINE/メールで通知します";
-                          default:
-                            return label;
-                        }
-                      };
-
                       return (
                         <div
                           key={featureIndex}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary text-xs md:text-sm cursor-help group relative"
-                          title={getFeatureTooltip(feature.label)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary text-xs md:text-sm"
                         >
                           <feature.icon className="w-3.5 h-3.5 text-[#4ECDC4]" />
                           <span>{feature.label}</span>
-                          {/* Tooltip */}
-                          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
-                            {getFeatureTooltip(feature.label)}
-                          </div>
                         </div>
                       );
                     })}
