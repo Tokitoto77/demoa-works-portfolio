@@ -128,8 +128,8 @@ export default function WorksSection() {
                   </Badge>
 
                   {/* Image */}
-                  <div className="relative group/image overflow-hidden">
-                    <div className="aspect-[3/4] md:aspect-[4/5] bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center p-6 md:p-8 transition-transform duration-500 group-hover/image:scale-105">
+                  <div className="relative overflow-hidden">
+                    <div className="aspect-[3/4] md:aspect-[4/5] bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center p-6 md:p-8">
                       {work.lpUrl ? (
                         <a
                           href={work.lpUrl}
@@ -142,12 +142,7 @@ export default function WorksSection() {
                             alt={work.title}
                             className="max-h-full w-auto object-contain drop-shadow-lg"
                           />
-                          {/* Hover Overlay for Mobile/PC */}
-                          <div className="absolute inset-0 bg-black/0 group-hover/image:bg-black/5 transition-colors flex items-center justify-center">
-                            <div className="opacity-0 group-hover/image:opacity-100 transition-opacity bg-white/90 p-3 rounded-full shadow-lg">
-                              <ExternalLink className="w-6 h-6 text-[#FF6B35]" />
-                            </div>
-                          </div>
+
                         </a>
                       ) : (
                         <img
