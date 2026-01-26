@@ -42,7 +42,7 @@ export default function WorksSection() {
       id: 2,
       title: "ハウスクリーニング エアコンお掃除キャンペーンLP",
       category: "ハウスクリーニング",
-      image: "/images/house-cleaning-lp-jp.png",
+      image: "/images/house-cleaning-smartphone.png",
       features: [
         { icon: FileSpreadsheet, label: "Google Forms連携" },
         { icon: FileSpreadsheet, label: "スプレッドシート連携" },
@@ -50,6 +50,7 @@ export default function WorksSection() {
       ],
       status: "サンプル",
       lpUrl: "https://tokitoto77.github.io/portfolio-lp-House-cleaning/",
+      proposalUrl: "/docs/house-cleaning-proposal.pdf",
     },
     {
       id: 3,
