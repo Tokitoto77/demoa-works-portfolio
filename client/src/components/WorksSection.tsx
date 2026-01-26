@@ -34,7 +34,7 @@ export default function WorksSection() {
         { icon: Mail, label: "自動配信メール" },
         { icon: Bell, label: "管理者通知" },
       ],
-      status: "完成",
+      status: "サンプル",
       lpUrl: "https://tokitoto77.github.io/portfolio-lp2",
       proposalUrl: "/docs/pilates-proposal.pdf",
     },
