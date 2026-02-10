@@ -56,7 +56,7 @@ export default function WorksSection() {
       id: 3,
       title: "コーチング 無料相談LP",
       category: "コンサル・コーチング",
-      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663038959558/BDtIlqBidsijcxCA.png",
+      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663038959558/VDLhmezXcJxNYDWH.png",
       features: [
         { icon: Calendar, label: "カレンダー予約" },
         { icon: Mail, label: "自動返信メール" },
