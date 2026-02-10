@@ -28,7 +28,7 @@ export default function WorksSection() {
       id: 1,
       title: "ピラティススタジオ 体験予約LP",
       category: "フィットネス",
-      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663038959558/ghdUSOViMTxXTanr.png",
+      image: "/images/pilates-lp-mockup-real.png",
       features: [
         { icon: FileSpreadsheet, label: "スプレッドシート連携" },
         { icon: Mail, label: "自動配信メール" },
@@ -42,7 +42,7 @@ export default function WorksSection() {
       id: 2,
       title: "ハウスクリーニング エアコンお掃除キャンペーンLP",
       category: "ハウスクリーニング",
-      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663038959558/SbOjtsfJmvyrlHdM.png",
+      image: "/images/house-cleaning-lp-mockup-new.png",
       features: [
         { icon: FileSpreadsheet, label: "Google Forms連携" },
         { icon: FileSpreadsheet, label: "スプレッドシート連携" },
@@ -56,7 +56,7 @@ export default function WorksSection() {
       id: 3,
       title: "コーチング 無料相談LP",
       category: "コンサル・コーチング",
-      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663038959558/BDtIlqBidsijcxCA.png",
+      image: "/images/coaching-lp-jp.png",
       features: [
         { icon: Calendar, label: "カレンダー予約" },
         { icon: Mail, label: "自動返信メール" },
@@ -67,7 +67,7 @@ export default function WorksSection() {
       id: 4,
       title: "ハンドメイド 注文LP",
       category: "ハンドメイド",
-      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663038959558/LGapKjJnDBalhNzQ.png",
+      image: "/images/handmade-lp-jp.png",
       features: [
         { icon: FileSpreadsheet, label: "在庫管理連携" },
         { icon: Mail, label: "自動返信メール" },
@@ -128,8 +128,8 @@ export default function WorksSection() {
                   </Badge>
 
                   {/* Image */}
-                  <div className="relative overflow-hidden">
-                    <div className="aspect-[3/4] md:aspect-[4/5] bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center p-6 md:p-8">
+                  <div className="relative group/image overflow-hidden">
+                    <div className="aspect-[3/4] md:aspect-[4/5] bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center p-6 md:p-8 transition-transform duration-500 group-hover/image:scale-105">
                       {work.lpUrl ? (
                         <a
                           href={work.lpUrl}
@@ -142,7 +142,12 @@ export default function WorksSection() {
                             alt={work.title}
                             className="max-h-full w-auto object-contain drop-shadow-lg"
                           />
-
+                          {/* Hover Overlay for Mobile/PC */}
+                          <div className="absolute inset-0 bg-black/0 group-hover/image:bg-black/5 transition-colors flex items-center justify-center">
+                            <div className="opacity-0 group-hover/image:opacity-100 transition-opacity bg-white/90 p-3 rounded-full shadow-lg">
+                              <ExternalLink className="w-6 h-6 text-[#FF6B35]" />
+                            </div>
+                          </div>
                         </a>
                       ) : (
                         <img
@@ -175,17 +180,15 @@ export default function WorksSection() {
 
                   {/* Features */}
                   <div className="flex flex-wrap gap-2 mb-4">
-                    {work.features.map((feature, featureIndex) => {
-                      return (
-                        <div
-                          key={featureIndex}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary text-xs md:text-sm"
-                        >
-                          <feature.icon className="w-3.5 h-3.5 text-[#4ECDC4]" />
-                          <span>{feature.label}</span>
-                        </div>
-                      );
-                    })}
+                    {work.features.map((feature, featureIndex) => (
+                      <div
+                        key={featureIndex}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary text-xs md:text-sm"
+                      >
+                        <feature.icon className="w-3.5 h-3.5 text-[#4ECDC4]" />
+                        <span>{feature.label}</span>
+                      </div>
+                    ))}
                   </div>
 
                   {/* Action Buttons */}
