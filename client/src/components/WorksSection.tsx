@@ -28,7 +28,7 @@ export default function WorksSection() {
       id: 1,
       title: "ピラティススタジオ 体験予約LP",
       category: "フィットネス",
-      image: "/images/pilates-lp-mockup-real.png",
+      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663038959558/ghdUSOViMTxXTanr.png",
       features: [
         { icon: FileSpreadsheet, label: "スプレッドシート連携" },
         { icon: Mail, label: "自動配信メール" },
@@ -42,7 +42,7 @@ export default function WorksSection() {
       id: 2,
       title: "ハウスクリーニング エアコンお掃除キャンペーンLP",
       category: "ハウスクリーニング",
-      image: "/images/house-cleaning-lp-mockup-new.png",
+      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663038959558/SbOjtsfJmvyrlHdM.png",
       features: [
         { icon: FileSpreadsheet, label: "Google Forms連携" },
         { icon: FileSpreadsheet, label: "スプレッドシート連携" },
@@ -56,7 +56,7 @@ export default function WorksSection() {
       id: 3,
       title: "コーチング 無料相談LP",
       category: "コンサル・コーチング",
-      image: "/images/coaching-lp-jp.png",
+      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663038959558/zhjebqVFxgWBwOpR.png",
       features: [
         { icon: Calendar, label: "カレンダー予約" },
         { icon: Mail, label: "自動返信メール" },
@@ -67,7 +67,7 @@ export default function WorksSection() {
       id: 4,
       title: "ハンドメイド 注文LP",
       category: "ハンドメイド",
-      image: "/images/handmade-lp-jp.png",
+      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663038959558/LGapKjJnDBalhNzQ.png",
       features: [
         { icon: FileSpreadsheet, label: "在庫管理連携" },
         { icon: Mail, label: "自動返信メール" },

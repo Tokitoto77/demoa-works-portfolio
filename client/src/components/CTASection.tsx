@@ -13,7 +13,7 @@ export default function CTASection() {
     <section className="py-16 md:py-24 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 gradient-warm opacity-90" />
-      <div className="absolute inset-0 bg-[url('/images/hero-bg.png')] bg-cover bg-center opacity-20" />
+      <div className="absolute inset-0 bg-[url('https://files.manuscdn.com/user_upload_by_module/session_file/310519663038959558/aflxqArptbVfeZBj.png')] bg-cover bg-center opacity-20" />
       
       <div className="container relative z-10">
         <motion.div

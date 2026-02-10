@@ -81,7 +81,7 @@ export default function FeaturesSection() {
         >
           <div className="max-w-4xl mx-auto px-4">
             <img
-              src="/images/automation-flow-jp.png"
+              src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663038959558/ykGOtSnSXwpENrvc.png"
               alt="自動化の流れ：お問い合わせ → 自動返信メール → カレンダー予約・スプレッドシート・LINE通知"
               className="w-full rounded-2xl shadow-soft-lg"
             />
