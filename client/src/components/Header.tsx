@@ -33,17 +33,13 @@ export default function Header() {
           {/* Logo */}
           <a
             href="#"
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 font-bold text-xl md:text-2xl text-foreground hover:opacity-80 transition-opacity"
             onClick={(e) => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
-            <img
-              src="/images/logo-horizontal.png"
-              alt="Demoa-works"
-              className="h-14 md:h-20 w-auto object-contain transition-transform hover:scale-105"
-            />
+            Demoa-works
           </a>
 
           {/* Desktop Navigation */}
