@@ -42,7 +42,7 @@ export default function WorksSection() {
       id: 2,
       title: "ハウスクリーニング エアコンお掃除キャンペーンLP",
       category: "ハウスクリーニング",
-      image: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663038959558/YcvfEhfEvFVxljit.png",
+      image: "/images/house-cleaning-lp-mockup-new.png",
       features: [
         { icon: FileSpreadsheet, label: "Google Forms連携" },
         { icon: FileSpreadsheet, label: "スプレッドシート連携" },
