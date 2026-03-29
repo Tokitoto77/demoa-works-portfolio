@@ -42,7 +42,7 @@ export default function Header() {
             <img
               src="/images/logo-horizontal.png"
               alt="Demoa-works"
-              className="h-14 md:h-20 w-auto object-contain transition-transform hover:scale-105"
+              className="h-20 md:h-24 w-auto object-contain transition-transform hover:scale-105"
             />
           </a>
 
