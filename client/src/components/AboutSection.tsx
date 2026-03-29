@@ -5,6 +5,7 @@
  */
 
 import { Card, CardContent } from "@/components/ui/card";
+import brandLogo from "@/assets/logo.png";
 import { GraduationCap, Heart, Lightbulb, Users } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -66,12 +67,12 @@ export default function AboutSection() {
                     {/* Soft background aura */}
                     <div className="absolute inset-0 bg-white/40 backdrop-blur-sm md:hidden" />
 
-                    <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full bg-white shadow-soft-lg flex items-center justify-center p-2 border border-white/80 group/avatar">
-                      <div className="transition-transform duration-700 group-hover/avatar:scale-110">
+                    <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full bg-white shadow-soft-lg flex items-center justify-center p-4 md:p-5 border border-white/80 group/avatar">
+                      <div className="transition-transform duration-700 group-hover/avatar:scale-105">
                         <img
-                          src="/images/logo.png"
+                          src={brandLogo}
                           alt="Demoa-works"
-                          className="w-full h-auto object-contain drop-shadow-sm scale-110"
+                          className="w-full h-full object-contain drop-shadow-sm"
                         />
                       </div>
                     </div>
